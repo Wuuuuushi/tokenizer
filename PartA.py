@@ -72,6 +72,8 @@ def main():
     
     try:
         for fileName in sys.argv[1:]:
+            if fileName[-4::] != ".txt":
+                raise TypeError
             tokens = tokenize(fileName)   # O(n)
             freq = computeWordFrequencies(tokens)  # O(n log n)
             print_freq(freq)  # O(n)
@@ -79,6 +81,10 @@ def main():
         print("Please input a textFile")
     except FileNotFoundError:
         print("FileNotFound: Check file path")
+    except TypeError:
+        print("TypeError: File type not accepted")
+    except Exception:
+        print("Something unexpected happened")
 
 if __name__ == "__main__":
     main()

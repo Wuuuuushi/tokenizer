@@ -48,6 +48,8 @@ def main():
     
     try:
         if len(sys.argv) == 3:
+            if sys.argv[1][-4::] != ".txt" or sys.argv[2][-4::] != ".txt":
+                raise TypeError
             tokens = tokenize(sys.argv[1]) # O(n)
             print(compareList(set(tokens), sys.argv[2])) # O(n)
         else:
@@ -56,6 +58,10 @@ def main():
         print("Please have exactly 2 files.")
     except FileNotFoundError:
         print("FileNotFound: Check file path")
+    except TypeError:
+        print("TypeError: File type not accepted")
+    except Exception:
+        print("Something unexpected happened")
 
 if __name__ == "__main__":
     main()
