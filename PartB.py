@@ -18,7 +18,6 @@ def compareList(tokens, curFile) -> int:
     output = 0
     seen = set()
     fullStr = ""
-    alphanum = set(string.ascii_letters + string.digits)
     with open(curFile, "r") as file:
         while True:
             character = file.read(1) # Read character by character to reduce file overload
@@ -28,7 +27,7 @@ def compareList(tokens, curFile) -> int:
                     seen.add(fullStr)
                 break
 
-            if not character in alphanum:
+            if not character.isalnum():
                 if fullStr in tokens and fullStr not in seen: # Check if the string is empty. If not, add it.
                     output += 1
                     seen.add(fullStr)
@@ -48,8 +47,6 @@ def main():
     
     try:
         if len(sys.argv) == 3:
-            if sys.argv[1][-4::] != ".txt" or sys.argv[2][-4::] != ".txt":
-                raise TypeError
             tokens = tokenize(sys.argv[1]) # O(n)
             print(compareList(set(tokens), sys.argv[2])) # O(n)
         else:

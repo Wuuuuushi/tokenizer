@@ -6,15 +6,12 @@ import sys
 
 def tokenize(TextFilePath): 
     '''
-    Space Complexity: O(n) - In the worst case, if every character is alphanumeric, 
-    the size of the tokens list will be the same as the number of characters (n).
-    Time Complexity: O(n) - The function reads through each character in the file, 
+    Time Complexity: O(n) - The function reads through each character in the file (N characters) , 
     and the operations within each iteration (if statements, appending, and lowercase) 
     all take constant time (O(1)).
     '''
     
     tokens = []
-    alphanum = set(string.ascii_letters + string.digits) # Set of all alphanumeric characters
 
     with open(TextFilePath, "r", encoding="utf-8", errors="replace") as file: 
         fullStr = ""
@@ -25,7 +22,7 @@ def tokenize(TextFilePath):
                     tokens.append(fullStr)
                 fullStr = ""
                 break
-            if not character in alphanum:
+            if not character.isalnum():
                 if fullStr != "": # If fullStr is not empty, append it to tokens
                     tokens.append(fullStr)
                 fullStr = "" 
@@ -59,7 +56,7 @@ def print_freq(freq):
     '''
     
     for values in freq.items(): 
-        print(f"{values[0]} = {values[1]}")
+        print(f"{values[0]} {values[1]}")
 
 def main():
     '''
@@ -72,8 +69,6 @@ def main():
     
     try:
         for fileName in sys.argv[1:]:
-            if fileName[-4::] != ".txt":
-                raise TypeError
             tokens = tokenize(fileName)   # O(n)
             freq = computeWordFrequencies(tokens)  # O(n log n)
             print_freq(freq)  # O(n)
